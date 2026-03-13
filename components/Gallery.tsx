@@ -11,23 +11,37 @@ export default function Gallery() {
   ];
 
   return (
-    <section id="gallery" className="py-24 bg-zinc-950">
+    <section id="gallery" className="py-24 bg-zinc-950 max-md:py-12 max-md:px-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-4">
-          <h2 className="text-primary tracking-widest text-base font-bold uppercase mb-2">Our Facility</h2>
-          <p className="mt-2 text-5xl font-extrabold tracking-tighter text-white sm:text-6xl">
+        <div className="text-center mb-12">
+          <h2 className="text-primary tracking-widest text-xs font-bold uppercase mb-2">Our Facility</h2>
+          <p className="mt-2 text-4xl font-extrabold tracking-tighter text-primary sm:text-7xl uppercase" style={{ fontSize: "clamp(1.6rem, 7.5vw, 4rem)" }}>
             INSIDE HEALTH FREAKS
+          </p>
+          <p className="mt-4 text-zinc-400 text-lg max-w-xl mx-auto max-md:text-[clamp(0.85rem, 3.5vw, 1.1rem)]">
+            Take a look at our world-class gym facilities and equipment designed to help you crush your goals.
           </p>
         </div>
 
-        <div className="flex justify-center items-center">
-          <CardStack3D 
-            images={images}
-            className="pt-24 pb-12"
-            cardWidth={500}
-            cardHeight={300}
-            spacing={{ x: 60, y: 60 }}
-          />
+        {/* Desktop: 3D Stack | Mobile: 2x2 Grid */}
+        <div className="md:block hidden">
+          <div className="flex justify-center items-center">
+            <CardStack3D 
+              images={images}
+              className="pt-24 pb-12"
+              cardWidth={500}
+              cardHeight={300}
+              spacing={{ x: 60, y: 60 }}
+            />
+          </div>
+        </div>
+
+        <div className="md:hidden grid grid-cols-2 gap-3 pb-8">
+          {images.slice(0, 4).map((img, i) => (
+            <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-zinc-800">
+              <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+            </div>
+          ))}
         </div>
       </div>
     </section>

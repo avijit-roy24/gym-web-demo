@@ -3,21 +3,21 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 bg-zinc-950">
+    <section id="contact" className="py-24 bg-zinc-950 max-md:py-12 max-md:px-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-primary tracking-widest text-xl font-bold uppercase mb-2">Get In Touch</h2>
-          <p className="mt-2 text-5xl font-extrabold tracking-tighter text-white sm:text-7xl">
+          <p className="mt-2 text-5xl font-extrabold tracking-tighter text-white sm:text-7xl" style={{ fontSize: "clamp(1.3rem, 5.5vw, 4.5rem)" }}>
             FIND US HERE
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-zinc-400 mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-zinc-400 mx-auto max-md:text-[clamp(0.875rem,3.5vw,1.1rem)]">
             Drop by for a free trial or contact us to start your fitness journey.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Map Placeholder */}
-          <div className="h-[400px] bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 flex items-center justify-center relative shadow-xl">
+          <div className="h-[400px] bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 flex items-center justify-center relative shadow-xl max-md:h-[250px]">
             {/* Real implementation would use Google Maps iframe, using a style placeholder for now */}
             <div className="absolute inset-0 bg-[url('https://maps.googleapis.com/maps/api/staticmap?center=23.36,85.33&zoom=14&size=800x400&markers=color:red%7C23.36,85.33&style=feature:all%7Celement:all%7Ccolor:0x111111&sensor=false')] opacity-30 grayscale blur-sm mix-blend-screen bg-cover bg-center transition-all duration-700 hover:filter-none hover:opacity-100 hover:blur-none cursor-pointer" />
             <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center pointer-events-none text-white">
@@ -27,7 +27,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 lg:p-12 shadow-xl">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 lg:p-12 shadow-xl max-md:p-5">
             <h3 className="text-2xl font-bold text-white uppercase tracking-wider mb-6">Contact Info</h3>
             
             <div className="space-y-6">

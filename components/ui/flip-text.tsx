@@ -10,6 +10,7 @@ interface FlipTextProps {
   delayMultiple?: number;
   framerProps?: Variants;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 function FlipText({
@@ -21,9 +22,10 @@ function FlipText({
     visible: { rotateX: 0, opacity: 1 },
   },
   className,
+  style,
 }: FlipTextProps) {
   return (
-    <div className="flex justify-start space-x-2">
+    <div className="flex flex-wrap justify-start" style={style}>
       <AnimatePresence>
         {word.split("").map((char, i) => (
           <motion.span
@@ -33,7 +35,7 @@ function FlipText({
             exit="hidden"
             variants={framerProps}
             transition={{ duration, delay: i * delayMultiple }}
-            className={cn("origin-center drop-shadow-sm", className)}
+            className={cn("origin-center drop-shadow-sm inline-block", className)}
           >
             {char === " " ? <span>&nbsp;</span> : char}
           </motion.span>

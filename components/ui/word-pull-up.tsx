@@ -10,6 +10,7 @@ interface WordPullUpProps {
   wrapperFramerProps?: Variants;
   framerProps?: Variants;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 function WordPullUp({
@@ -28,6 +29,7 @@ function WordPullUp({
     show: { y: 0, opacity: 1 },
   },
   className,
+  style,
 }: WordPullUpProps) {
   return (
     <motion.h1
@@ -35,6 +37,7 @@ function WordPullUp({
       initial="hidden"
       whileInView="show"
       viewport={{ once: false }}
+      style={style}
       className={cn(
         "font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm",
         className,

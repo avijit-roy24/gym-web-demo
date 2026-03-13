@@ -39,9 +39,135 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    box-sizing: border-box;
   }
 
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
+
+  /* Global Body Text Fix */
+  p, li, span, div {
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+  }
+
+  /* Global Heading Fix */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE STYLES — viewports 320px to 767px ONLY
+   Desktop layout (769px+) is NOT touched.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Section Padding Mobile Fix */
+  section {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Heading Clamp - Priority 9 */
+  h1 { font-size: clamp(1.8rem, 7vw, 4rem) !important; }
+  h2, h3 { font-size: clamp(1.2rem, 5.5vw, 2.5rem) !important; }
+
+  /* Ensure all images are bounded */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* GPU Acceleration for Animations */
+  * {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  /* Every button/link 48px touch target minimum - Priority 13 */
+  button, .btn, [role="button"], a {
+    min-height: 48px !important;
+  }
+
+  /* Smooth native scroll on scrollable containers */
+  .mobile-scroll-container,
+  .overflow-x-auto,
+  [class*="overflow"] {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Scroll snap for horizontal carousels */
+  .mobile-snap-x {
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .mobile-snap-x::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-snap-center {
+    scroll-snap-align: center !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HIDE NEXT.JS DEV INDICATOR (FLOATING BLACK 'N' BUTTON)
+   ═══════════════════════════════════════════════════════════════════ */
+nextjs-portal, 
+[data-nextjs-toast], 
+#__next-build-watcher,
+#next-route-announcer,
+div[class*="nextjs-toast"],
+div[id="__next-build-watcher"],
+div[style*="z-index: 2147483647"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Dot indicators for carousels */
+.dot-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+}
+.dot-indicators .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.dot-indicators .dot.active {
+  background: hsl(142, 71%, 45%);
+  transform: scale(1.3);
 }

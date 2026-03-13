@@ -14,7 +14,7 @@ const KB: { keywords: string[]; response: string }[] = [
   {
     keywords: ["hi", "hello", "hey", "howdy", "namaste", "good morning", "good evening", "sup"],
     response:
-      "Hey there! 👋 Welcome to Health Freaks. I'm your fitness assistant. You can ask me about our programs, trainers, timings, fees, location, or how to get started!",
+      "Hey there! 👋 Welcome to Health Freaks. I'm your fitness assistant. You can ask me about our programs, coaches, timings, fees, location, or how to get started!",
   },
   {
     keywords: ["price", "pricing", "fee", "cost", "membership", "plan", "charge", "how much", "rate"],
@@ -37,9 +37,9 @@ const KB: { keywords: string[]; response: string }[] = [
       "📞 You can reach us at:\n\n**+91 097099 31400**\n\nWe're also on WhatsApp! Feel free to call or message us anytime during gym hours.",
   },
   {
-    keywords: ["trainer", "coach", "instructor", "personal trainer", "pt", "personal training", "expert"],
+    keywords: ["trainer", "coach", "instructor", "personal trainer", "pt", "personal training", "expert", "staff"],
     response:
-      "🏋️ Our trainers are certified fitness experts with 5–15 years of experience!\n\nWe have specialists in:\n• Strength & Powerlifting\n• Weight Loss & Cardio\n• Yoga & Flexibility\n• Bodybuilding & Physique\n\nPersonal training sessions are included in our Elite plan or can be added as an add-on. Want to know more?",
+      "🏋️ Our expert coaches are certified and have over 10 years of experience in transformation and bodybuilding. We have specialists in:\n• Strength & Powerlifting\n• Weight Loss & Cardio\n• Yoga & Flexibility\n• Bodybuilding & Physique\n\nPersonal training sessions are included in our Elite plan or can be added as an add-on. Want to know more?",
   },
   {
     keywords: ["program", "class", "classes", "course", "workout", "training", "crossfit", "yoga", "zumba", "cardio", "strength", "hiit"],
@@ -64,7 +64,7 @@ const KB: { keywords: string[]; response: string }[] = [
   {
     keywords: ["trial", "free", "try", "visit", "first time", "new", "beginner", "start", "join"],
     response:
-      "🎉 Great news — we offer a **7-day FREE trial** for all new members!\n\nNo credit card required. Just walk in with a valid ID or call us to pre-register:\n\n📞 +91 097099 31400\n\nWe'll give you a full gym tour and match you with a trainer based on your goals!",
+      "🎉 Great news — we offer a **7-day FREE trial** for all new members!\n\nNo credit card required. Just walk in with a valid ID or call us to pre-register:\n\n📞 +91 097099 31400\n\nWe'll give you a full gym tour and match you with a coach based on your goals!",
   },
   {
     keywords: ["equipment", "machine", "facility", "facilities", "gym", "weights", "treadmill", "bench"],
@@ -110,7 +110,7 @@ export default function AIChatWidget() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hi there! 👋 I'm your Health Freaks AI assistant. Ask me about our programs, pricing, timings, trainers, or how to get started!",
+      text: "Hi there! 👋 I'm your Health Freaks AI assistant. Ask me about our programs, pricing, timings, coaches, or how to get started!",
       sender: "bot",
     },
   ]);
@@ -120,7 +120,7 @@ export default function AIChatWidget() {
 
   const WELCOME = {
     id: 1,
-    text: "Hi there! 👋 I'm your Health Freaks AI assistant. Ask me about our programs, pricing, timings, trainers, or how to get started!",
+    text: "Hi there! 👋 I'm your Health Freaks AI assistant. Ask me about our programs, pricing, timings, coaches, or how to get started!",
     sender: "bot",
   };
 
@@ -170,7 +170,7 @@ export default function AIChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-20 right-6 w-80 sm:w-96 h-[520px] z-[100] bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-20 right-6 w-80 sm:w-96 h-[520px] z-[100] bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden max-md:bottom-24 max-md:right-3 max-md:w-[calc(100vw-1.5rem)] max-md:h-[70vh]"
           >
             {/* Header */}
             <div className="bg-zinc-950 p-4 border-b border-zinc-800 flex justify-between items-center shrink-0">
@@ -283,7 +283,7 @@ export default function AIChatWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleChat}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg flex justify-center items-center z-[100] border-4 border-zinc-950"
+        className="w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg flex justify-center items-center z-[100] border-4 border-zinc-950"
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
       </motion.button>

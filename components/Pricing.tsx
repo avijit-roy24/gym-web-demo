@@ -2,25 +2,14 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 export default function Pricing() {
   const plans = [
     {
-      name: "MONTHLY",
-      price: "₹2,000",
-      description: "Perfect for short-term goals and flexibility.",
-      features: [
-        "Access to all gym equipment",
-        "Locker room & shower access",
-        "General trainer guidance",
-        "1 Group class per week"
-      ],
-      recommended: false,
-    },
-    {
       name: "QUARTERLY",
-      price: "₹5,500",
-      description: "Get serious and save more for medium goals.",
+      price: "₹2,000",
+      description: "Our most popular balanced plan for consistent growth.",
       features: [
         "Access to all gym equipment",
         "Locker room & shower access",
@@ -28,6 +17,20 @@ export default function Pricing() {
         "Complimentary fitness assessment",
       ],
       recommended: true,
+      badge: "RECOMMENDED",
+    },
+    {
+      name: "MONTHLY",
+      price: "₹5,500",
+      description: "Perfect for flexibility and testing the waters.",
+      features: [
+        "Access to all gym equipment",
+        "Locker room & shower access",
+        "General trainer guidance",
+        "1 Group class per week"
+      ],
+      recommended: false,
+      badge: null,
     },
     {
       name: "YEARLY",
@@ -41,59 +44,127 @@ export default function Pricing() {
         "Freeze membership for 30 days"
       ],
       recommended: false,
+      badge: "Save ₹6,000",
     },
   ];
 
+  // Mobile scroll tracking
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    if (!scrollRef.current || !isMobile) return;
+    const container = scrollRef.current;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.offsetWidth * 0.85; // card is 85vw
+    const index = Math.round(scrollLeft / cardWidth);
+    setActiveIndex(Math.min(index, plans.length - 1));
+  }, [isMobile, plans.length]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !isMobile) return;
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [isMobile, handleScroll]);
+
   return (
-    <section id="pricing" className="py-24 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+    <section id="pricing" className="py-24 bg-zinc-950 max-md:py-12 max-md:px-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-md:px-5">
+        <div className="text-center mb-16 max-md:mb-10">
           <h2 className="text-primary tracking-widest text-sm font-bold uppercase mb-2">Memberships</h2>
-          <p className="mt-2 text-4xl font-extrabold tracking-tighter text-white sm:text-5xl">
+          <p className="mt-2 text-4xl font-extrabold tracking-tighter text-white sm:text-5xl" style={{ fontSize: "clamp(1.3rem, 5.5vw, 3rem)" }}>
             PRICING PLANS
           </p>
-          <p className="mt-4 max-w-2xl text-xl text-zinc-400 mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-zinc-400 mx-auto max-md:text-[clamp(0.85rem, 3.5vw, 1.1rem)]">
             Choose a plan that fits your goals. No hidden fees. Just results.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {/* Mobile Horizontal Scroll CAROUSEL - Priority 4 */}
+        <div
+          ref={scrollRef}
+          className={`
+            flex overflow-x-auto snap-x snap-mandatory gap-5 pb-8 px-4
+            md:grid md:grid-cols-3 md:gap-8 md:max-w-5xl md:mx-auto md:px-0 md:pb-0
+            [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
+          `}
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
-              transition={{ delay: i * 0.15, duration: 0.5 }}
-              className={`relative bg-zinc-900 border ${
-                plan.recommended ? "border-primary" : "border-zinc-800"
-              } rounded-2xl p-8 flex flex-col items-center text-center shadow-xl group`}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className={`
+                relative bg-zinc-900 border ${plan.recommended ? "border-primary shadow-[0_0_20px_rgba(37,211,102,0.15)]" : "border-zinc-800"} 
+                rounded-2xl p-8 flex flex-col items-center text-center group
+                min-w-[85vw] snap-center shrink-0 
+                md:min-w-0 md:p-8
+              `}
+              style={{ overflow: "visible" }} /* Ensure badge isn't clipped */
             >
-              {plan.recommended && (
-                <div className="absolute top-0 -translate-y-1/2 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-widest py-1 px-4 rounded-full">
-                  Most Popular
+              {/* Badge - Priority 4: Positioned to be fully visible */}
+              {plan.badge && (
+                <div className={`absolute -top-3 right-4 z-[30] text-[10px] font-extrabold uppercase tracking-widest py-1.5 px-3 rounded-md border shadow-2xl ${
+                  plan.recommended 
+                    ? "bg-primary text-black border-primary" 
+                    : "bg-zinc-950 text-white border-primary/40 shadow-primary/20"
+                }`}>
+                  {plan.badge}
                 </div>
               )}
-              <h3 className="text-xl font-bold tracking-widest text-zinc-200 mb-2 uppercase">{plan.name}</h3>
-              <p className="text-4xl font-extrabold text-white mb-4">{plan.price}</p>
-              <p className="text-sm text-zinc-500 mb-8 max-w-[200px]">{plan.description}</p>
-              <ul className="text-left w-full space-y-4 mb-8">
+              
+              <h3 className="text-xl font-extrabold tracking-widest text-zinc-200 mb-2 uppercase pt-2">{plan.name}</h3>
+              <p className="text-5xl font-black text-white mb-4">{plan.price}</p>
+              <p className="text-sm text-zinc-500 mb-8 max-w-[220px] leading-relaxed max-md:mb-6">{plan.description}</p>
+              
+              <ul className="text-left w-full space-y-4 mb-8 max-md:space-y-3 max-md:mb-6">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start text-sm text-zinc-300">
-                    <Check className="h-5 w-5 text-primary shrink-0 mr-3" />
-                    <span>{feature}</span>
+                    <Check className="h-5 w-5 text-primary shrink-0 mr-3 mt-0.5" />
+                    <span className="leading-tight break-words">{feature}</span>
                   </li>
                 ))}
               </ul>
+
               <Button
                 variant={plan.recommended ? "default" : "outline"}
-                className={`w-full mt-auto ${plan.recommended ? "shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:shadow-[0_0_25px_rgba(34,197,94,0.5)]" : "border-zinc-700 hover:bg-zinc-800"}`}
+                className={`w-full mt-auto font-black uppercase tracking-widest h-[3.2rem] ${plan.recommended ? "shadow-[0_4px_15px_rgba(37,211,102,0.3)]" : "border-zinc-700 hover:bg-zinc-800"}`}
+                style={{ minHeight: "3.2rem" }}
               >
                 Choose Plan
               </Button>
             </motion.div>
           ))}
         </div>
+
+        {/* Mobile carousel indicators - Priority 4 */}
+        <div className="flex md:hidden justify-center gap-2 mt-2">
+          {plans.map((_, i) => (
+            <div
+              key={i}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === activeIndex ? "bg-primary w-6" : "bg-zinc-800 w-2"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Footer info text - Priority 4 */}
+        <p className="text-center text-zinc-500 text-[11px] uppercase tracking-widest mt-10 px-6 font-bold opacity-60 leading-relaxed md:mt-12">
+          No joining fee. No cancellation fee.<br className="md:hidden"/> FREE 3-day trial on all plans.
+        </p>
       </div>
     </section>
   );

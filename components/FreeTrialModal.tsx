@@ -62,7 +62,8 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[200]"
+            className="fixed inset-0 bg-black/70 z-[200]"
+            style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
           />
 
           {/* Modal */}
@@ -75,21 +76,27 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
             className="fixed inset-0 z-[201] flex items-center justify-center px-4 pointer-events-none"
           >
             <div
-              className="relative w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto"
+              className="relative w-[90vw] max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto max-md:max-h-[82vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top accent bar */}
-              <div className="h-1 w-full bg-gradient-to-r from-primary via-primary/60 to-transparent" />
+              <div className="h-1 w-full bg-gradient-to-r from-primary via-primary/60 to-transparent shrink-0" />
 
-              {/* Close button */}
+              {/* Close button - Priority 5: Safe area aware, always reachable */}
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors bg-zinc-800 hover:bg-zinc-700 rounded-full p-1.5"
+                className="absolute right-4 top-4 text-zinc-500 hover:text-white transition-colors bg-zinc-900/80 hover:bg-zinc-800 backdrop-blur-md rounded-full flex items-center justify-center z-[210] shadow-lg border border-zinc-800"
+                style={{ 
+                  width: "3rem", 
+                  height: "3rem",
+                  top: "calc(0.75rem + env(safe-area-inset-top))"
+                }}
+                aria-label="Close modal"
               >
-                <X className="w-4 h-4" />
+                <X className="w-6 h-6" />
               </button>
 
-              <div className="p-7">
+              <div className="p-7 max-md:p-6 max-md:pt-[calc(4rem+env(safe-area-inset-top))] overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
                 {/* Logo + Brand */}
                 <div className="flex flex-col items-center mb-6">
                   <div className="relative mb-3">
@@ -166,6 +173,7 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
                               value={name}
                               onChange={(e) => setName(e.target.value)}
                               className={`w-full bg-zinc-900 border ${errors.name ? "border-red-500" : "border-zinc-700"} rounded-xl pl-10 pr-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors`}
+                              style={{ minHeight: "3rem" }}
                             />
                           </div>
                           {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
@@ -188,6 +196,7 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
                                 className={`w-full bg-zinc-900 border ${errors.phone ? "border-red-500" : "border-zinc-700"} rounded-xl pl-10 pr-4 py-3 text-white text-sm focus:outline-none focus:border-primary transition-colors`}
+                                style={{ minHeight: "3rem" }}
                               />
                             </div>
                           </div>
@@ -221,6 +230,7 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
                         <button
                           type="submit"
                           className="w-full py-3.5 bg-primary text-black font-extrabold text-sm uppercase tracking-widest rounded-xl hover:bg-primary/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/25 mt-2"
+                          style={{ minHeight: "3.2rem" }}
                         >
                           Book Free Trial 🎉
                         </button>

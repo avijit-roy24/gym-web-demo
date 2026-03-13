@@ -4,7 +4,7 @@ export function AnimatedTestimonialsPreview() {
   const testimonials = [
     {
       quote:
-        "The trainers here are absolutely incredible. I've achieved results in 6 months that I couldn't reach in 2 years at my old gym.",
+        "The coaches here are absolutely incredible. I've achieved results in 6 months that I couldn't reach in 2 years at my old gym.",
       name: "Marcus Johnson",
       designation: "Amateur Powerlifter",
       src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=800&auto=format&fit=crop",
@@ -18,7 +18,7 @@ export function AnimatedTestimonialsPreview() {
     },
     {
       quote:
-        "I love the flexibility of the 24/7 access. No matter my work schedule, I know I can come in and get a great workout in an energetic environment.",
+        "I love the flexibility. No matter my work schedule, I know I can come in and get a great workout in an energetic environment.",
       name: "James Wilson",
       designation: "Software Engineer",
       src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=800&auto=format&fit=crop",
