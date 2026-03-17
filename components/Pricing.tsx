@@ -1,8 +1,8 @@
 "use client";
+
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
 
 export default function Pricing() {
   const plans = [
@@ -44,7 +44,7 @@ export default function Pricing() {
         "Freeze membership for 30 days"
       ],
       recommended: false,
-      badge: "Save ₹6,000",
+      badge: "SAVE ₹6,000",
     },
   ];
 
@@ -77,9 +77,9 @@ export default function Pricing() {
   }, [isMobile, handleScroll]);
 
   return (
-    <section id="pricing" className="py-24 bg-zinc-950 max-md:py-12 max-md:px-0">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-md:px-5">
-        <div className="text-center mb-16 max-md:mb-10">
+    <section id="pricing" className="section-animate py-24 bg-zinc-950 max-md:py-12 max-md:px-0 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-md:px-0">
+        <div className="text-center mb-16 max-md:mb-10 max-md:px-5">
           <h2 className="text-primary tracking-widest text-sm font-bold uppercase mb-2">Memberships</h2>
           <p className="mt-2 text-4xl font-extrabold tracking-tighter text-white sm:text-5xl" style={{ fontSize: "clamp(1.3rem, 5.5vw, 3rem)" }}>
             PRICING PLANS
@@ -92,31 +92,22 @@ export default function Pricing() {
         {/* Mobile Horizontal Scroll CAROUSEL - Priority 4 */}
         <div
           ref={scrollRef}
-          className={`
-            flex overflow-x-auto snap-x snap-mandatory gap-5 pb-8 px-4
-            md:grid md:grid-cols-3 md:gap-8 md:max-w-5xl md:mx-auto md:px-0 md:pb-0
-            [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
-          `}
-          style={{ WebkitOverflowScrolling: "touch" }}
+          className="mobile-snap-x gap-5 pb-8 px-4 md:grid md:grid-cols-3 md:gap-8 md:max-w-5xl md:mx-auto md:px-0 md:pb-0 pt-6"
         >
           {plans.map((plan, i) => (
-            <motion.div
+            <div
               key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
               className={`
                 relative bg-zinc-900 border ${plan.recommended ? "border-primary shadow-[0_0_20px_rgba(37,211,102,0.15)]" : "border-zinc-800"} 
                 rounded-2xl p-8 flex flex-col items-center text-center group
-                min-w-[85vw] snap-center shrink-0 
-                md:min-w-0 md:p-8
+                w-[85vw] max-w-[400px] mobile-snap-center
+                md:w-auto md:p-8
               `}
               style={{ overflow: "visible" }} /* Ensure badge isn't clipped */
             >
-              {/* Badge - Priority 4: Positioned to be fully visible */}
+              {/* Badge */}
               {plan.badge && (
-                <div className={`absolute -top-3 right-4 z-[30] text-[10px] font-extrabold uppercase tracking-widest py-1.5 px-3 rounded-md border shadow-2xl ${
+                <div className={`absolute -top-4 right-4 z-[30] text-[10px] font-extrabold uppercase tracking-widest py-1.5 px-3 rounded-md border shadow-2xl ${
                   plan.recommended 
                     ? "bg-primary text-black border-primary" 
                     : "bg-zinc-950 text-white border-primary/40 shadow-primary/20"
@@ -140,29 +131,36 @@ export default function Pricing() {
 
               <Button
                 variant={plan.recommended ? "default" : "outline"}
+                onClick={() => window.dispatchEvent(new Event("openBookingModal"))}
                 className={`w-full mt-auto font-black uppercase tracking-widest h-[3.2rem] ${plan.recommended ? "shadow-[0_4px_15px_rgba(37,211,102,0.3)]" : "border-zinc-700 hover:bg-zinc-800"}`}
                 style={{ minHeight: "3.2rem" }}
               >
                 Choose Plan
               </Button>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Mobile carousel indicators - Priority 4 */}
-        <div className="flex md:hidden justify-center gap-2 mt-2">
+        {/* Mobile carousel indicators */}
+        <div className="dot-indicators md:hidden">
           {plans.map((_, i) => (
-            <div
+            <button
               key={i}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === activeIndex ? "bg-primary w-6" : "bg-zinc-800 w-2"
-              }`}
+              className={`dot ${i === activeIndex ? "active" : ""}`}
+              onClick={() => {
+                setActiveIndex(i);
+                if (scrollRef.current) {
+                  const cardWidth = scrollRef.current.offsetWidth * 0.85 + 20; // 85vw + gap
+                  scrollRef.current.scrollTo({ left: cardWidth * i, behavior: "smooth" });
+                }
+              }}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
 
-        {/* Footer info text - Priority 4 */}
-        <p className="text-center text-zinc-500 text-[11px] uppercase tracking-widest mt-10 px-6 font-bold opacity-60 leading-relaxed md:mt-12">
+        {/* Footer info text */}
+        <p className="text-center text-zinc-500 text-[11px] uppercase tracking-widest mt-10 px-6 font-bold opacity-60 leading-relaxed md:mt-12 max-md:pb-6">
           No joining fee. No cancellation fee.<br className="md:hidden"/> FREE 3-day trial on all plans.
         </p>
       </div>

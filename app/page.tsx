@@ -9,10 +9,14 @@ import Timetable from "@/components/Timetable";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
+import { BookingModal } from "@/components/BookingModal";
+import StickyCTA from "@/components/StickyCTA";
+import { GlobalScrollObserver } from "@/components/GlobalScrollObserver";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col pt-20">
+      <GlobalScrollObserver />
       <Header />
       <main className="flex-grow">
         <Hero />
@@ -25,9 +29,10 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <BookingModal />
 
-      {/* Floating Buttons Stack - Priority 2 */}
-      <div className="fixed bottom-6 right-6 z-[9998] flex flex-col items-center gap-3 max-md:bottom-[1.5rem] max-md:right-[1.5rem] max-md:gap-[0.75rem]">
+      {/* Floating Buttons Stack - Priority 3: true fixed floating */}
+      <div className="fixed bottom-6 right-6 z-[9998] flex flex-col items-center gap-3 max-md:bottom-[1.5rem] max-md:right-[1.5rem] max-md:gap-[0.75rem]" style={{ position: "fixed" }}>
         {/* Chat Button (Above) */}
         <AIChatWidget />
         
@@ -44,6 +49,9 @@ export default function Home() {
           </svg>
         </a>
       </div>
+
+      {/* Sticky Bottom CTA Bar - Priority 11 */}
+      <StickyCTA />
     </div>
   );
 }

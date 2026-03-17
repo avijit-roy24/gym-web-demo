@@ -62,7 +62,7 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/70 z-[200]"
+            className="fixed inset-0 bg-black/70 z-[9999]"
             style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
           />
 
@@ -73,10 +73,10 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 40 }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            className="fixed inset-0 z-[201] flex items-center justify-center px-4 pointer-events-none"
+            className="fixed inset-0 z-[9999] flex items-center justify-center px-4 pointer-events-none"
           >
             <div
-              className="relative w-[90vw] max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto max-md:max-h-[82vh] flex flex-col"
+              className="relative w-[90vw] max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto max-md:max-h-[80vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top accent bar */}
@@ -85,7 +85,7 @@ export default function FreeTrialModal({ isOpen, onClose, defaultClass = "" }: F
               {/* Close button - Priority 5: Safe area aware, always reachable */}
               <button
                 onClick={handleClose}
-                className="absolute right-4 top-4 text-zinc-500 hover:text-white transition-colors bg-zinc-900/80 hover:bg-zinc-800 backdrop-blur-md rounded-full flex items-center justify-center z-[210] shadow-lg border border-zinc-800"
+                className="absolute right-4 top-4 text-zinc-500 hover:text-white transition-colors bg-zinc-900/80 hover:bg-zinc-800 backdrop-blur-md rounded-full flex items-center justify-center z-[10000] shadow-lg border border-zinc-800"
                 style={{ 
                   width: "3rem", 
                   height: "3rem",

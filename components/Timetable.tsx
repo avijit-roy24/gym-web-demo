@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { FlipText } from "./ui/flip-text";
 import { Clock, User, Dumbbell } from "lucide-react";
 import FreeTrialModal from "./FreeTrialModal";
 
@@ -68,41 +66,23 @@ export default function Timetable() {
   };
 
   return (
-    <section id="timetable" className="py-24 bg-zinc-950 border-y border-zinc-900 relative overflow-hidden max-md:py-12 max-md:px-5">
+    <section id="timetable" className="section-animate py-24 bg-zinc-950 border-y border-zinc-900 relative overflow-hidden max-md:py-12 max-md:px-5">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 blur-[120px] rounded-full max-md:w-[300px] max-md:h-[150px]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-md:px-0">
-        {/* Heading - Priority 7 */}
-        <motion.div
-          className="text-center mb-16 max-md:mb-10 px-2"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.6 }}
-        >
+        {/* Heading */}
+        <div className="text-center mb-16 max-md:mb-10 px-2">
           <span className="text-primary tracking-widest text-[10px] font-bold uppercase mb-2 block">Schedule</span>
           <div className="flex justify-center mt-3 max-md:mt-1">
-            <div className="flex flex-col items-center justify-center">
-              <div className="flex items-center justify-center gap-2 max-md:gap-x-2 max-md:flex-wrap">
-                <FlipText
-                  word="DAILY"
-                  duration={0.4}
-                  delayMultiple={0.06}
-                  className="text-4xl sm:text-6xl font-extrabold tracking-tighter text-white max-md:text-[clamp(1.4rem,6vw,2.5rem)]"
-                  style={{ letterSpacing: "-0.01em" }}
-                />
-                <FlipText
-                  word="TIMETABLE"
-                  duration={0.4}
-                  delayMultiple={0.06}
-                  className="text-4xl sm:text-6xl font-extrabold tracking-tighter text-primary max-md:text-[clamp(1.4rem,6vw,2.5rem)]"
-                  style={{ letterSpacing: "-0.01em" }}
-                />
-              </div>
-            </div>
+            <h2 
+              className="text-4xl sm:text-6xl font-extrabold tracking-tighter text-white"
+              style={{ fontSize: "clamp(1.3rem, 5.5vw, 2.5rem)", letterSpacing: "-0.01em" }}
+            >
+              DAILY <span className="text-primary">TIMETABLE</span>
+            </h2>
           </div>
           <p className="mt-4 max-w-2xl text-lg text-zinc-400 mx-auto max-md:text-[clamp(0.85rem, 3.5vw, 1rem)] max-md:px-4 max-md:leading-snug">
             {isMobile ? (
@@ -111,7 +91,7 @@ export default function Timetable() {
               <>Hover over any class to instantly book your <span className="text-primary font-semibold">free trial</span>!</>
             )}
           </p>
-        </motion.div>
+        </div>
 
         {/* Desktop: Table layout */}
         <div className="hidden md:block">
@@ -132,16 +112,11 @@ export default function Timetable() {
             {/* Rows */}
             <div className="divide-y divide-zinc-800/60">
               {schedule.map((item, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, x: -40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: false, amount: 0.3 }}
-                  transition={{ duration: 0.4, delay: i * 0.1, ease: "easeOut" }}
-                  onHoverStart={() => handleRowHover(item.class)}
-                  onHoverEnd={handleRowLeave}
-                  whileHover={{ backgroundColor: "rgba(255,255,255,0.04)", x: 6 }}
-                  className="grid grid-cols-3 px-6 py-5 text-white cursor-pointer transition-colors group relative"
+                  onMouseEnter={() => handleRowHover(item.class)}
+                  onMouseLeave={handleRowLeave}
+                  className="grid grid-cols-3 px-6 py-5 text-white cursor-pointer transition-colors hover:bg-white/5 hover:translate-x-1 group relative duration-300"
                 >
                   <div className="flex items-center gap-2">
                     <span
@@ -161,7 +136,7 @@ export default function Timetable() {
                       Book Trial →
                     </span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -170,12 +145,8 @@ export default function Timetable() {
         {/* Mobile: Stacked cards */}
         <div className="md:hidden space-y-3">
           {schedule.map((item, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
               onClick={() => handleCardTap(item.class)}
               className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 cursor-pointer active:bg-zinc-800 transition-colors"
               style={{ minHeight: "4rem" }}
@@ -198,19 +169,13 @@ export default function Timetable() {
                 <span className="font-semibold text-base text-white">{item.class}</span>
                 <span className="text-zinc-400 text-xs uppercase tracking-wider">{item.trainer}</span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.p
-          className="text-center text-zinc-600 text-sm mt-6 max-md:text-xs max-md:mt-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ delay: 0.6 }}
-        >
+        <p className="text-center text-zinc-600 text-sm mt-6 max-md:text-xs max-md:mt-4">
           * Schedule may vary on public holidays. Call +91 097099 31400 to confirm.
-        </motion.p>
+        </p>
       </div>
 
       <FreeTrialModal

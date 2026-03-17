@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 bg-zinc-950 max-md:py-12 max-md:px-5">
+    <section id="contact" className="section-animate py-24 bg-zinc-950 max-md:py-12 max-md:px-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-primary tracking-widest text-xl font-bold uppercase mb-2">Get In Touch</h2>

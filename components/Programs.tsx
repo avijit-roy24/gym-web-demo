@@ -1,6 +1,5 @@
 "use client";
 import { Dumbbell, Activity, ShieldCheck, HeartPulse } from "lucide-react";
-import { motion } from "framer-motion";
 
 const features = [
   {
@@ -33,29 +32,24 @@ const features = [
   },
 ];
 
-import { WordPullUp } from "./ui/word-pull-up";
-
 export default function Programs() {
   return (
-    <div id="programs" className="py-24 bg-zinc-950 relative overflow-hidden max-md:py-12 max-md:px-5">
+    <section id="programs" className="section-animate py-24 bg-zinc-950 relative overflow-hidden max-md:py-12 max-md:px-5">
       <div className="absolute left-0 top-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-800 to-transparent"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 max-md:mb-8">
-          <WordPullUp
-            words="OUR PROGRAMS"
+          <h2
             className="text-4xl font-extrabold tracking-tighter text-primary sm:text-6xl uppercase mb-2"
             style={{ fontSize: "clamp(1.6rem, 7vw, 3.5rem)" }}
-          />
+          >
+            OUR PROGRAMS
+          </h2>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-md:gap-4">
           {features.map((feature, index) => (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+            <div
               key={feature.name}
               className="relative group rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800/50 hover:border-primary/50 transition-colors"
             >
@@ -74,10 +68,10 @@ export default function Programs() {
                   {feature.description}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

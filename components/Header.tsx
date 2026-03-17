@@ -19,11 +19,12 @@ export default function Header() {
   }, [isOpen]);
 
   const navigation = [
+    { name: "Home", href: "/" },
     { name: "Programs", href: "#programs" },
     { name: "Timetable", href: "#timetable" },
     { name: "Pricing", href: "#pricing" },
     { name: "Reviews", href: "#testimonials" },
-    { name: "Gallery", href: "#gallery" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -51,7 +52,7 @@ export default function Header() {
             <Button variant="outline" onClick={() => window.location.hash = "free-trial"} className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
               Book Free Trial
             </Button>
-            <Button>
+            <Button onClick={() => window.dispatchEvent(new Event("openBookingModal"))}>
               Join Now
             </Button>
           </div>
@@ -68,7 +69,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Slide-in Panel - Priority 3 */}
+      {/* Mobile Slide-in Panel - Priority 1 */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -77,7 +78,7 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] md:hidden"
+              className="fixed inset-0 bg-black/80 z-[9998] md:hidden"
               onClick={() => setIsOpen(false)}
             />
             {/* Panel */}
@@ -85,9 +86,9 @@ export default function Header() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-zinc-950 z-[9999] shadow-2xl flex flex-col md:hidden border-l border-zinc-900 overflow-hidden"
-              style={{ paddingBottom: "env(safe-area-inset-bottom)", backgroundColor: "#09090b" }}
+              style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
             >
               {/* Header inside Panel */}
               <div className="flex items-center justify-between p-6 border-b border-zinc-900" style={{ paddingTop: "calc(1.5rem + env(safe-area-inset-top))" }}>
@@ -99,7 +100,7 @@ export default function Header() {
                   onClick={() => setIsOpen(false)}
                   className="text-foreground hover:text-primary focus:outline-none bg-zinc-900/50 hover:bg-zinc-900 rounded-full flex items-center justify-center transition-all"
                   aria-label="Close menu"
-                  style={{ width: "3.2rem", height: "3.2rem" }}
+                  style={{ width: "3rem", height: "3rem" }}
                   type="button"
                 >
                   <X className="h-7 w-7" />
@@ -113,28 +114,35 @@ export default function Header() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center px-8 text-base font-bold text-white hover:text-primary hover:bg-zinc-900/50 transition-all uppercase tracking-[0.1em] border-b border-zinc-900/30"
+                    className="flex items-center px-8 text-base font-bold text-white hover:text-primary transition-all uppercase tracking-[0.1em] border-b border-zinc-900/30"
                     style={{ minHeight: "3.5rem" }}
                   >
                     {item.name}
                   </a>
                 ))}
+                <a
+                  href="#free-trial"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    window.location.hash = "free-trial";
+                  }}
+                  className="flex items-center px-8 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-all uppercase tracking-[0.1em] mt-2 mb-2 mx-4 rounded-xl justify-center"
+                  style={{ minHeight: "3.5rem" }}
+                >
+                  Book Free Trial
+                </a>
               </nav>
 
               {/* CTA buttons bottom */}
               <div className="mt-auto px-6 py-8 flex flex-col gap-3 border-t border-zinc-900 bg-zinc-950/80 backdrop-blur-md">
                 <Button
-                  variant="outline"
-                  className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground font-extrabold tracking-widest text-xs uppercase"
+                  className="w-full font-extrabold tracking-widest text-xs uppercase shadow-lg shadow-primary/20 bg-zinc-100 text-zinc-900 hover:bg-white"
                   style={{ minHeight: "3.2rem" }}
-                  onClick={() => { setIsOpen(false); window.location.hash = "free-trial"; }}
-                >
-                  Book Free Trial
-                </Button>
-                <Button
-                  className="w-full font-extrabold tracking-widest text-xs uppercase shadow-lg shadow-primary/20"
-                  style={{ minHeight: "3.2rem" }}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    window.dispatchEvent(new Event("openBookingModal"));
+                  }}
                 >
                   Join Now
                 </Button>

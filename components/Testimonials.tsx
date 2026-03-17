@@ -112,7 +112,7 @@ export default function Testimonials() {
   );
 
   return (
-    <section id="testimonials" className="py-24 bg-zinc-950 border-t border-zinc-900 max-md:py-12 max-md:px-5">
+    <section id="testimonials" className="section-animate py-24 bg-zinc-950 border-t border-zinc-900 max-md:py-12 max-md:px-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-md:px-0">
         <div className="text-center mb-16 max-md:mb-10">
           <h2 className="text-primary tracking-widest text-sm font-bold uppercase mb-2">Member Reviews</h2>
